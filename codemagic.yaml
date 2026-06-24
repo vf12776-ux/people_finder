@@ -4,10 +4,16 @@ workflows:
     max_build_duration: 30
     environment:
       flutter: stable
+      vars:
+        GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+    cache:
+      cache_paths: []
     scripts:
+      - name: Clean build
+        script: flutter clean
       - name: Get dependencies
         script: flutter pub get
       - name: Build APK
-        script: flutter build apk --release
+        script: flutter build apk --release --no-tree-shake-icons
     artifacts:
       - build/app/outputs/flutter-apk/app-release.apk
